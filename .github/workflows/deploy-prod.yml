@@ -8,7 +8,6 @@ jobs:
     environment:
       name: prod
       url: https://${{ github.repository_owner }}.github.io/${{ github.repository }}/
-      deployment_protection_rules: []
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
