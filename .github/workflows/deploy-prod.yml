@@ -1,7 +1,11 @@
 name: Deploy to Prod
 
 on:
-  workflow_call: {}
+  workflow_call:
+    inputs:
+      repo_name:
+        required: true
+        type: string
 
 jobs:
   deploy:
