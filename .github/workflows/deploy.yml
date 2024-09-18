@@ -27,19 +27,19 @@ jobs:
       repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
 
   deploy_qa:
-    needs: deploy_dev
+    needs: [extract_repo_name, deploy_dev]
     uses: ./.github/workflows/deploy-qa.yml
     with:
       repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
 
   deploy_uat:
-    needs: deploy_qa
+    needs: [extract_repo_name, deploy_qa]
     uses: ./.github/workflows/deploy-uat.yml
     with:
       repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
 
   deploy_prod:
-    needs: deploy_uat
+    needs: [extract_repo_name, deploy_uat]
     uses: ./.github/workflows/deploy-prod.yml
     with:
       repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
