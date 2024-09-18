@@ -1,3 +1,4 @@
+# .github/workflows/deploy.yml
 name: Deploy Pipeline
 
 on:
@@ -8,24 +9,16 @@ on:
 jobs:
   deploy_dev:
     uses: ./.github/workflows/deploy-dev.yml
-    with:
-      environment: dev
+    needs: []
 
   deploy_qa:
     needs: deploy_dev
     uses: ./.github/workflows/deploy-qa.yml
-    with:
-      environment: qa
 
   deploy_uat:
     needs: deploy_qa
     uses: ./.github/workflows/deploy-uat.yml
-    with:
-      environment: uat
 
   deploy_prod:
     needs: deploy_uat
     uses: ./.github/workflows/deploy-prod.yml
-    with:
-      environment: prod
-      deployment_protection_rules: []
