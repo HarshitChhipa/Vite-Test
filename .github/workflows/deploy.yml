@@ -29,13 +29,13 @@ jobs:
     needs: deploy_dev
     uses: ./.github/workflows/deploy-qa.yml
     with:
-      repo_name: ${{ needs.deploy_dev.outputs.repo_name }
+      repo_name: ${{ needs.deploy_dev.outputs.repo_name }}
 
   deploy_uat:
     needs: deploy_qa
     uses: ./.github/workflows/deploy-uat.yml
     with:
-      repo_name: ${{ needs.deploy_qa.outputs.repo_name }
+      repo_name: ${{ needs.deploy_qa.outputs.repo_name }}
 
   deploy_prod:
     needs: deploy_uat
