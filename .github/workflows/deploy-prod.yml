@@ -32,10 +32,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact In Prod
+      - name: Upload artifact for Dev
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
+          name: prod-artifact-${{ github.run_id }}
 
       - name: Deploy to GitHub Pages (Prod)
         uses: actions/deploy-pages@v4
