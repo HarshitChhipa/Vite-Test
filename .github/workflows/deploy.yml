@@ -18,8 +18,7 @@ jobs:
     steps:
       - name: Extract Repository Name
         id: extract_repo_name
-        run: echo "::set-output name=repo_name::${GITHUB_REPOSITORY##*/}"
-
+        run: echo "repo_name=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
   deploy_dev:
     needs: extract_repo_name
     uses: ./.github/workflows/deploy-dev.yml
@@ -27,19 +26,19 @@ jobs:
       repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
 
   deploy_qa:
-    needs: [extract_repo_name, deploy_dev]
+    needs: deploy_dev
     uses: ./.github/workflows/deploy-qa.yml
     with:
-      repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
+      repo_name: ${{ needs.deploy_dev.outputs.repo_name }
 
   deploy_uat:
-    needs: [extract_repo_name, deploy_qa]
+    needs: deploy_qa
     uses: ./.github/workflows/deploy-uat.yml
     with:
-      repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
+      repo_name: ${{ needs.deploy_qa.outputs.repo_name }
 
   deploy_prod:
-    needs: [extract_repo_name, deploy_uat]
+    needs: deploy_uat
     uses: ./.github/workflows/deploy-prod.yml
     with:
-      repo_name: ${{ needs.extract_repo_name.outputs.repo_name }}
+      repo_name: ${{ needs.deploy_uat.outputs.repo_name }}
